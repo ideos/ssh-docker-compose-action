@@ -48,6 +48,7 @@ if [ ! -z "$INPUT_PROJECT_NAME" ]; then
 fi
 
 # create private key and add it to authentication agent
+whoami
 mkdir -p $HOME/.ssh
 printf '%s\n' "$INPUT_SSH_KEY" > "$HOME/.ssh/private_key"
 chmod 600 "$HOME/.ssh/private_key"
