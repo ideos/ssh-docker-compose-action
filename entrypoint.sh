@@ -48,13 +48,14 @@ if [ ! -z "$INPUT_PROJECT_NAME" ]; then
 fi
 
 # create private key and add it to authentication agent
-whoami
-echo "$HOME"
-mkdir -p $HOME/.ssh
-printf '%s\n' "$INPUT_SSH_KEY" > "$HOME/.ssh/private_key"
-chmod 600 "$HOME/.ssh/private_key"
+mkdir -p /root/.ssh
+printf '%s\n' "$INPUT_SSH_KEY" > "/root/.ssh/private_key"
+chmod 600 "/root/.ssh/private_key"
 eval $(ssh-agent)
-ssh-add "$HOME/.ssh/private_key"
+ssh-add "/root/.ssh/private_key"
+
+touch /root/.ssh/known_hosts
+ssh-keyscan -H "$INPUT_SSH_HOST" >> /root/.ssh/known_hosts
 
 # create remote context in docker and switch to it
 docker context create remote --docker "host=ssh://$INPUT_SSH_USER@$INPUT_SSH_HOST:$INPUT_SSH_PORT"
