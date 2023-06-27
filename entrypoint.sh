@@ -44,7 +44,7 @@ if [ ! -z "$INPUT_ENV_FILE" ]; then
 fi
 
 if [ ! -z "$INPUT_PROJECT_NAME" ]; then
-  INPUT_PROJECT_NAME="-p $INPUT_PROJECT_NAME"
+  INPUT_PROJECT_NAME_FLAG="-p $INPUT_PROJECT_NAME"
 fi
 
 # create private key and add it to authentication agent
@@ -67,7 +67,7 @@ if [ "$INPUT_PULL" == 'true' ]; then
 fi
 
 # deploy stack
-docker compose -f $INPUT_COMPOSE_FILE $INPUT_ENV_FILE $INPUT_PROJECT_NAME config |
+docker compose -f $INPUT_COMPOSE_FILE $INPUT_ENV_FILE $INPUT_PROJECT_NAME_FLAG config |
 docker stack deploy -c - $INPUT_PROJECT_NAME
 # docker compose -f $INPUT_COMPOSE_FILE $INPUT_ENV_FILE $INPUT_PROJECT_NAME up -d $INPUT_BUILD $INPUT_FORCE_RECREATE $INPUT_OPTIONS $INPUT_SERVICE
 
