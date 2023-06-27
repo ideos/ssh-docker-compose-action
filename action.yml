@@ -14,6 +14,16 @@ inputs:
   ssh_port:
     description: Remote port to use, defaults at 22
     required: false
+  registry: 
+    description: Docker Registry for Docker Login
+    required: false
+    default: 'ghcr.io'
+  registry_username:
+    description: Username for Docker Login
+    required: false
+  registry_password:
+    description: Password for Docker Login
+    required: false
   compose_file:
     description: Docker compose filename.
     required: false

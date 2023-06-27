@@ -61,6 +61,10 @@ ssh-keyscan -H "$INPUT_SSH_HOST" >> /root/.ssh/known_hosts
 docker context create remote --docker "host=ssh://$INPUT_SSH_USER@$INPUT_SSH_HOST:$INPUT_SSH_PORT"
 docker context use remote
 
+if [ ! -z "$INPUT_REGISTRY" ] && [ ! -z "$INPUT_REGISTRY_USERNAME" ] && [ ! -z "$INPUT_REGISTRY_PASSWORD" ]; then
+  echo "$INPUT_REGISTRY_PASSWORD" | docker login --username "$INPUT_REGISTRY_USERNAME" --password-stdin "$INPUT_REGISTRY"
+fi
+
 # pull latest images if paramether provided
 if [ "$INPUT_PULL" == 'true' ]; then
   docker compose -f $INPUT_COMPOSE_FILE $INPUT_ENV_FILE_FLAG $INPUT_PROJECT_NAME pull
