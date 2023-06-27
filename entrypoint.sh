@@ -40,7 +40,7 @@ if [ -z "$INPUT_SSH_PORT" ]; then
 fi
 
 if [ ! -z "$INPUT_ENV_FILE" ]; then
-  INPUT_ENV_FILE="--env-file $INPUT_ENV_FILE"
+  INPUT_ENV_FILE_FLAG="--env-file $INPUT_ENV_FILE"
 fi
 
 if [ ! -z "$INPUT_PROJECT_NAME" ]; then
@@ -65,9 +65,9 @@ docker context use remote
 if [ "$INPUT_PULL" == 'true' ]; then
   docker compose -f $INPUT_COMPOSE_FILE pull
 fi
-
+cat $INPUT_ENV_FILE
 # deploy stack
-docker compose -f $INPUT_COMPOSE_FILE $INPUT_ENV_FILE $INPUT_PROJECT_NAME up -d $INPUT_BUILD $INPUT_FORCE_RECREATE $INPUT_OPTIONS $INPUT_SERVICE
+docker compose -f $INPUT_COMPOSE_FILE $INPUT_ENV_FILE_FLAG $INPUT_PROJECT_NAME up -d $INPUT_BUILD $INPUT_FORCE_RECREATE $INPUT_OPTIONS $INPUT_SERVICE
 
 # cleanup context
 docker context use default 
