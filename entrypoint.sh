@@ -67,7 +67,9 @@ if [ "$INPUT_PULL" == 'true' ]; then
 fi
 
 # deploy stack
-docker compose -f $INPUT_COMPOSE_FILE $INPUT_ENV_FILE $INPUT_PROJECT_NAME up -d $INPUT_BUILD $INPUT_FORCE_RECREATE $INPUT_OPTIONS $INPUT_SERVICE
+docker compose -f $INPUT_COMPOSE_FILE $INPUT_ENV_FILE $INPUT_PROJECT_NAME config |
+docker stack deploy -c - $INPUT_PROJECT_NAME
+# docker compose -f $INPUT_COMPOSE_FILE $INPUT_ENV_FILE $INPUT_PROJECT_NAME up -d $INPUT_BUILD $INPUT_FORCE_RECREATE $INPUT_OPTIONS $INPUT_SERVICE
 
 # cleanup context
 docker context use default 
