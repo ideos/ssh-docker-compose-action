@@ -48,12 +48,11 @@ if [ ! -z "$INPUT_PROJECT_NAME" ]; then
 fi
 
 # create private key and add it to authentication agent
-mkdir -p /root/.ssh
-printf '%s\n' "$INPUT_SSH_KEY" > "/root/.ssh/private_key"
-chmod 600 "/root/.ssh/private_key"
-eval $(ssh-agent)
-ssh-add "/root/.ssh/private_key"
 
+eval $(ssh-agent -s)
+echo "$INPUT_SSH_KEY" | tr -d '\r' | printf '%s\n' - | ssh-add -
+
+mkdir -p /root/.ssh
 touch /root/.ssh/known_hosts
 ssh-keyscan -H "$INPUT_SSH_HOST" >> /root/.ssh/known_hosts
 
