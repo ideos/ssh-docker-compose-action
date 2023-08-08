@@ -50,7 +50,7 @@ fi
 # create private key and add it to authentication agent
 
 eval $(ssh-agent -s)
-echo "$INPUT_SSH_KEY" | tr -d '\r' | printf '%s\n' - | ssh-add -
+printf '%s\n' "$INPUT_SSH_KEY" | ssh-add -
 
 mkdir -p /root/.ssh
 touch /root/.ssh/known_hosts
